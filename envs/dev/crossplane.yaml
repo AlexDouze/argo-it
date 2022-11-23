@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane
+  namespace: argo-system
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: crossplane-system
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: envs/dev/apps/crossplane
+    repoURL: git@github.com:AlexDouze/argo-it.git
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-infra
+  namespace: argo-system
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: aws-infra
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: envs/dev/infra/aws
+    repoURL: git@github.com:AlexDouze/argo-it.git
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
